@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.10
+
+  build:
+    commands:
+      - echo "Creating deployment package..."
+      - zip function.zip lambda_fun.py
+
+  post_build:
+    commands:
+      - echo "Deploying to AWS Lambda..."
+      - aws lambda update-function-code \
+          --function-name myLambdaFunction \
+          --zip-file fileb://function.zip
